@@ -8,8 +8,8 @@ import {
 let store = {
     title: "PASE ÉLITE",
     description: "Consigue tu Pase Élite de Free Fire de forma rápida y segura.",
-    priceCOP: 8000, // Actualizado a 8000 para evitar que parpadee al recargar
-    priceUSD: 2.09,
+    priceCOP: 8000,
+    priceUSD: 2.39,
     whatsapp: "",
     benefits: [
         {
@@ -226,6 +226,7 @@ function renderFAQ() {
     });
 }
 
+// CARGA PRIORITARIA: Espera a Firestore antes de pintar la tienda para evitar saltos
 async function cargarConfiguracion() {
     try {
         const ref = doc(db, "config", "store");
@@ -238,15 +239,13 @@ async function cargarConfiguracion() {
                 ...snapshot.data()
             };
         }
-
-        renderStore();
-
     } catch (error) {
         console.error(
             "Error cargando configuración:",
             error
         );
-
+    } finally {
+        // Se pinta la tienda solo DESPUÉS de intentar leer Firebase
         renderStore();
     }
 }
@@ -326,5 +325,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
+    // Llamamos a la carga directamente al iniciar
     cargarConfiguracion();
 });

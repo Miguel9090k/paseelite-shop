@@ -1,77 +1,234 @@
-// ==========================================
-// CONFIGURACIÓN Y VARIABLES GLOBALES
-// ==========================================
-const store = {
-    whatsapp: "573157874619", // Reemplaza o asegúrate de que tome tu número configurado
-    priceCOP: 7000
+import { db } from "./firebase-config.js";
+
+import {
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+let store = {
+    title: "PASE ÉLITE",
+    description: "Consigue tu Pase Élite de Free Fire de forma rápida y segura.",
+    priceCOP: 7000,
+    priceUSD: 2.09,
+    whatsapp: "",
+    benefits: [
+        {
+            icon: "🎁",
+            title: "Recompensas",
+            text: "Obtén recompensas exclusivas."
+        },
+        {
+            icon: "💎",
+            title: "Contenido exclusivo",
+            text: "Disfruta contenido especial."
+        },
+        {
+            icon: "⚡",
+            title: "Entrega rápida",
+            text: "Procesamos tu pedido rápidamente."
+        }
+    ],
+    topBuyers: [
+        {
+            name: "Jugador",
+            passes: 10
+        },
+        {
+            name: "Jugador",
+            passes: 5
+        },
+        {
+            name: "Jugador",
+            passes: 3
+        }
+    ],
+    faq: [
+        {
+            question: "¿Cómo recibo mi Pase Élite?",
+            answer: "Después de confirmar tu pedido recibirás las instrucciones correspondientes por WhatsApp."
+        },
+        {
+            question: "¿Qué necesito para comprar?",
+            answer: "Necesitas tu ID y nombre de jugador de Free Fire."
+        },
+        {
+            question: "¿Dónde hago el pedido?",
+            answer: "El pedido se realiza directamente por WhatsApp."
+        }
+    ]
 };
 
-// Función auxiliar para seleccionar elementos por ID
-function $(id) {
-    return document.getElementById(id);
-}
+const $ = (id) => document.getElementById(id);
 
-// Formateador de moneda en pesos colombianos
 function formatoCOP(valor) {
-    return new Intl.NumberFormat('es-CO').format(valor);
+    return Number(valor || 0).toLocaleString("es-CO");
 }
 
-// ==========================================
-// CONTROL DE CANTIDAD DE PASES
-// ==========================================
-window.changeQuantity = function(change) {
-    const inputCantidad = $("cantidad");
-    if (!inputCantidad) return;
+function actualizarTotal() {
+    const cantidadInput = $("cantidad");
+    if (!cantidadInput) return;
 
-    let cantidadActual = parseInt(inputCantidad.value) || 1;
-    let nuevaCantidad = cantidadActual + change;
+    let cantidad = parseInt(cantidadInput.value) || 1;
 
-    if (nuevaCantidad < 1) {
-        nuevaCantidad = 1;
+    if (cantidad < 1) {
+        cantidad = 1;
     }
 
-    inputCantidad.value = nuevaCantidad;
+    cantidadInput.value = cantidad;
 
-    // Actualizar el texto del total en pantalla
-    const totalBox = $("total");
-    if (totalBox) {
-        const total = nuevaCantidad * store.priceCOP;
-        totalBox.textContent = `$${formatoCOP(total)} COP`;
+    const total = cantidad * Number(store.priceCOP || 0);
+    const totalElement = $("total");
+
+    if (totalElement) {
+        totalElement.textContent = `$${formatoCOP(total)} COP`;
     }
+}
+
+window.changeQuantity = function(cambio) {
+    const input = $("cantidad");
+    if (!input) return;
+
+    let cantidad = parseInt(input.value) || 1;
+    cantidad += cambio;
+
+    if (cantidad < 1) {
+        cantidad = 1;
+    }
+
+    input.value = cantidad;
+    actualizarTotal();
 };
+
+function renderStore() {
+    const title = $("storeTitle");
+    if (title) {
+        title.textContent = store.title;
+    }
+
+    const description = $("storeDescription");
+    if (description) {
+        description.textContent = store.description;
+    }
+
+    const priceCOP = $("priceCOP");
+    if (priceCOP) {
+        priceCOP.textContent = `$${formatoCOP(store.priceCOP)} COP`;
+    }
+
+    const priceUSD = $("priceUSD");
+    if (priceUSD) {
+        priceUSD.textContent = `US$${Number(store.priceUSD || 0).toFixed(2)}`;
+    }
+
+    renderBenefits();
+    renderTopBuyers();
+    renderFAQ();
+    actualizarTotal();
+}
+
+function renderBenefits() {
+    const container = $("benefits");
+    if (!container) return;
+
+    container.innerHTML = "";
+    const benefits = Array.isArray(store.benefits) ? store.benefits : [];
+
+    benefits.forEach((benefit) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+            <span>${benefit.icon || "🔥"}</span>
+            <h3>${benefit.title || "Beneficio"}</h3>
+            <p>${benefit.text || ""}</p>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function renderTopBuyers() {
+    const container = $("topBuyers");
+    if (!container) return;
+
+    container.innerHTML = "";
+    const buyers = Array.isArray(store.topBuyers) ? store.topBuyers : [];
+
+    buyers.forEach((buyer, index) => {
+        const element = document.createElement("div");
+        element.className = "buyer";
+        element.innerHTML = `
+            <strong>#${index + 1}</strong>
+            <span>${buyer.name || "Jugador"}</span>
+            <b>${buyer.passes || 0} Pases</b>
+        `;
+        container.appendChild(element);
+    });
+}
+
+function renderFAQ() {
+    const container = $("faq");
+    if (!container) return;
+
+    container.innerHTML = "";
+    const faq = Array.isArray(store.faq) ? store.faq : [];
+
+    faq.forEach((item) => {
+        const details = document.createElement("details");
+        details.innerHTML = `
+            <summary>${item.question || "Pregunta"}</summary>
+            <p>${item.answer || ""}</p>
+        `;
+        container.appendChild(details);
+    });
+}
+
+async function cargarConfiguracion() {
+    try {
+        const ref = doc(db, "config", "store");
+        const snapshot = await getDoc(ref);
+
+        if (snapshot.exists()) {
+            store = {
+                ...store,
+                ...snapshot.data()
+            };
+        }
+
+        renderStore();
+    } catch (error) {
+        console.error("Error cargando configuración:", error);
+        renderStore();
+    }
+}
 
 // ==========================================
 // PROCESO DE COMPRA (MODAL DE PAGO)
 // ==========================================
-
-// 1. Se ejecuta al hacer clic en "PEDIR POR WHATSAPP"
 window.comprar = function() {
     const playerId = $("playerId")?.value.trim();
     const playerName = $("playerName")?.value.trim();
 
     if (!playerId) {
-        alert("Por favor, escribe tu ID de Free Fire.");
+        alert("Escribe tu ID de Free Fire.");
         return;
     }
 
     if (!playerName) {
-        alert("Por favor, escribe tu nombre de Free Fire.");
+        alert("Escribe tu nombre de Free Fire.");
         return;
     }
 
     if (!store.whatsapp) {
-        alert("La tienda todavía no tiene configurado el número de WhatsApp.");
+        alert("La tienda todavía no tiene configurado el WhatsApp.");
         return;
     }
 
-    // Muestra la ventana emergente (modal) de método de pago
+    // Abre la ventana flotante (modal) de pago
     const modal = $("paymentModal");
     if (modal) {
         modal.style.display = "flex";
     }
 };
 
-// 2. Cierra la ventana flotante si el usuario cancela
 window.cerrarModalPago = function() {
     const modal = $("paymentModal");
     if (modal) {
@@ -79,35 +236,38 @@ window.cerrarModalPago = function() {
     }
 };
 
-// 3. Confirma el método seleccionado y abre el WhatsApp con los datos
 window.confirmarYEnviarWhatsApp = function() {
     const playerId = $("playerId")?.value.trim();
     const playerName = $("playerName")?.value.trim();
     const cantidad = parseInt($("cantidad")?.value) || 1;
 
-    // Obtener el método de pago seleccionado en la ventana flotante
     const selectedInput = document.querySelector('input[name="modalPaymentMethod"]:checked');
     const metodoPago = selectedInput ? selectedInput.value : "Nequi";
 
-    const total = cantidad * store.priceCOP;
+    const total = cantidad * Number(store.priceCOP || 0);
 
-    // Armar el mensaje para WhatsApp
     const mensaje = `🔥 NUEVO PEDIDO - PASE ÉLITE
 
 🆔 ID: ${playerId}
 👤 Nombre: ${playerName}
 📦 Cantidad: ${cantidad}
 💰 Total: $${formatoCOP(total)} COP
-💳 Método de pago: ${metodoPago} (3157874619)
-
-📸 *Adjunto la captura de mi transferencia*
+💳 Método de pago: ${metodoPago}
 
 🛒 Tienda: PaseEliteShop`;
 
-    const numeroLimpio = String(store.whatsapp).replace(/\D/g, "");
-    const urlWhatsApp = `https://wa.me/${numeroLimpio}?text=${encodeURIComponent(mensaje)}`;
+    const numero = String(store.whatsapp).replace(/\D/g, "");
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
 
-    // Cerrar modal y abrir WhatsApp en otra pestaña
     cerrarModalPago();
-    window.open(urlWhatsApp, "_blank");
+    window.open(url, "_blank");
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+    const cantidad = $("cantidad");
+    if (cantidad) {
+        cantidad.addEventListener("change", actualizarTotal);
+    }
+
+    cargarConfiguracion();
+});

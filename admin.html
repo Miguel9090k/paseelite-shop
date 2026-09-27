@@ -14,51 +14,68 @@
     </header>
 
     <main class="container">
-        <!-- Sección de Inicio de Sesión -->
-        <section id="loginSection" class="card-main">
+        <!-- Sección de Inicio de Sesión (IDs alineados con admin.js) -->
+        <section id="loginBox" class="card-main">
             <h2>🔒 Panel de administración</h2>
             <div class="form-group">
-                <label for="adminEmail">Correo del administrador</label>
-                <input type="email" id="adminEmail" placeholder="tucorreo@gmail.com">
+                <label for="email">Correo del administrador</label>
+                <input type="email" id="email" placeholder="tucorreo@gmail.com">
             </div>
             <div class="form-group">
-                <label for="adminPassword">Contraseña</label>
-                <input type="password" id="adminPassword" placeholder="••••••••">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" placeholder="••••••••">
             </div>
-            <button class="btn-whatsapp" onclick="loginAdmin()">🔑 INICIAR SESIÓN</button>
+            <button class="btn-whatsapp" onclick="login()">🔑 INICIAR SESIÓN</button>
+            <p id="loginMessage" style="color: #ff9800; text-align: center; margin-top: 15px; font-weight: bold;"></p>
         </section>
 
-        <!-- Sección de Configuración (Oculta hasta iniciar sesión) -->
-        <section id="adminSection" class="card-main" style="display: none;">
+        <!-- Sección de Configuración (Oculta hasta iniciar sesión, IDs alineados con admin.js) -->
+        <section id="adminPanel" class="card-main" style="display: none;">
             <h2>⚙️ Configuración de la tienda</h2>
             
             <div class="form-group">
-                <label for="editTitle">Título de la tienda</label>
-                <input type="text" id="editTitle">
+                <label for="title">Título de la tienda</label>
+                <input type="text" id="title">
             </div>
 
             <div class="form-group">
-                <label for="editDescription">Descripción / Aviso de Pago</label>
-                <textarea id="editDescription" rows="3" style="width:100%; background:#111; color:#fff; border:1px solid #333; padding:10px; border-radius:5px;"></textarea>
+                <label for="description">Descripción / Aviso de Pago</label>
+                <textarea id="description" rows="3" style="width:100%; background:#111; color:#fff; border:1px solid #333; padding:10px; border-radius:5px;"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="editPriceCOP">Precio en COP</label>
-                <input type="number" id="editPriceCOP">
+                <label for="priceCOP">Precio en COP</label>
+                <input type="number" id="priceCOP">
             </div>
 
             <div class="form-group">
-                <label for="editPriceUSD">Precio en USD</label>
-                <input type="number" step="0.01" id="editPriceUSD">
+                <label for="priceUSD">Precio en USD</label>
+                <input type="number" step="0.01" id="priceUSD">
             </div>
 
             <div class="form-group">
-                <label for="editWhatsapp">WhatsApp de contacto (con código de país)</label>
-                <input type="text" id="editWhatsapp" placeholder="573157874619">
+                <label for="whatsapp">WhatsApp de contacto (con código de país)</label>
+                <input type="text" id="whatsapp" placeholder="573157874619">
             </div>
 
-            <button class="btn-whatsapp" onclick="guardarConfiguracion()" style="background: #4CAF50; color: white; margin-top: 15px;">💾 GUARDAR CAMBIOS</button>
-            <button class="btn-whatsapp" onclick="cerrarSesion()" style="background: #f44336; color: white; margin-top: 10px;">🚪 CERRAR SESIÓN</button>
+            <div class="form-group">
+                <label for="benefits">Beneficios (Formato JSON)</label>
+                <textarea id="benefits" rows="4" style="width:100%; background:#111; color:#fff; border:1px solid #333; padding:10px; border-radius:5px; font-family:monospace;"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="topBuyers">Top Compradores (Formato JSON)</label>
+                <textarea id="topBuyers" rows="4" style="width:100%; background:#111; color:#fff; border:1px solid #333; padding:10px; border-radius:5px; font-family:monospace;"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="faq">Preguntas Frecuentes (Formato JSON)</label>
+                <textarea id="faq" rows="4" style="width:100%; background:#111; color:#fff; border:1px solid #333; padding:10px; border-radius:5px; font-family:monospace;"></textarea>
+            </div>
+
+            <button class="btn-whatsapp" onclick="guardar()" style="background: #4CAF50; color: white; margin-top: 15px;">💾 GUARDAR CAMBIOS</button>
+            <button class="btn-whatsapp" onclick="logout()" style="background: #f44336; color: white; margin-top: 10px;">🚪 CERRAR SESIÓN</button>
+            <p id="message" style="color: #ff9800; text-align: center; margin-top: 15px; font-weight: bold;"></p>
         </section>
     </main>
 

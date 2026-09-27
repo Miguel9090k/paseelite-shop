@@ -26,9 +26,9 @@ let configuracion = {
     description:
         "Consigue tu Pase Élite de Free Fire de forma rápida y segura.",
 
-    priceCOP: 7000,
+    priceCOP: 8000,
 
-    priceUSD: 2.09,
+    priceUSD: 2.39,
 
     whatsapp: "",
 

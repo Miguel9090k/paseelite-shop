@@ -3,100 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pase Élite - Tienda</title>
+
+    <title>Pase Élite Free Fire</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <div class="container">
-        <!-- Encabezado de la Tienda -->
-        <header>
-            <h1 id="storeTitle">PASE ÉLITE</h1>
-            <p id="storeDescription">Consigue tu Pase Élite de Free Fire.</p>
-        </header>
+<header class="header">
+    <div class="logo">🔥 PASE ÉLITE</div>
+    <a href="#comprar" class="header-btn">COMPRAR</a>
+</header>
 
-        <!-- Tarjeta de Compra -->
+<section class="hero">
+    <div class="hero-content">
+        <p class="tag">FREE FIRE</p>
+
+        <h1 id="storeTitle">
+            PASE ÉLITE
+        </h1>
+
+        <p id="storeDescription">
+            Consigue tu Pase Élite de Free Fire de forma rápida y segura.
+        </p>
+
+        <div class="price-box">
+            <span id="priceCOP">$7.000 COP</span>
+            <small id="priceUSD">US$2.09</small>
+        </div>
+
+        <a href="#comprar" class="main-btn">
+            🛒 COMPRAR AHORA
+        </a>
+    </div>
+</section>
+
+<section class="section">
+
+    <h2>🔥 Beneficios</h2>
+
+    <div id="benefits" class="cards">
+
         <div class="card">
-            <div class="price-container">
-                <span id="priceCOP">8000 COP</span>
-                <span id="priceUSD">2.39 USD</span>
-            </div>
-
-            <div class="input-group">
-                <label for="playerId">ID de Free Fire</label>
-                <input type="text" id="playerId" placeholder="Ingresa tu ID">
-            </div>
-
-            <div class="input-group">
-                <label for="playerName">Nombre en el juego</label>
-                <input type="text" id="playerName" placeholder="Ingresa tu nombre">
-            </div>
-
-            <div class="input-group">
-                <label for="cantidad">Cantidad de Pases</label>
-                <div class="quantity-box">
-                    <button type="button" onclick="changeQuantity(-1)">-</button>
-                    <input type="number" id="cantidad" value="1" min="1">
-                    <button type="button" onclick="changeQuantity(1)">+</button>
-                </div>
-            </div>
-
-            <div class="total-container">
-                <span>Total:</span>
-                <strong id="total">8000 COP</strong>
-            </div>
-
-            <!-- 💳 Selector de Método de Pago (Añadido exactamente como lo pediste) -->
-            <div style="margin: 15px 0; text-align: left;">
-                <label style="display: block; color: #ff9800; font-weight: bold; margin-bottom: 8px; font-size: 14px;">💳 Selecciona tu método de pago:</label>
-                
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <!-- Opción Nequi (Activa) -->
-                    <label style="display: flex; align-items: center; background: rgba(255, 152, 0, 0.1); border: 2px solid #ff9800; padding: 10px; border-radius: 8px; cursor: pointer; color: #fff;">
-                        <input type="radio" name="paymentMethod" value="Nequi" checked style="accent-color: #ff9800; margin-right: 10px; transform: scale(1.1);">
-                        <div style="flex-grow: 1;">
-                            <span style="font-weight: bold; font-size: 14px;">💜 Nequi</span>
-                            <span style="display: block; font-size: 11px; color: #bbb;">Transfiere al: 315 787 4619</span>
-                        </div>
-                    </label>
-
-                    <!-- Opción PayPal (Próximamente) -->
-                    <label style="display: flex; align-items: center; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 10px; border-radius: 8px; opacity: 0.5; cursor: not-allowed;">
-                        <input type="radio" name="paymentMethod" value="PayPal" disabled style="margin-right: 10px; transform: scale(1.1);">
-                        <div style="flex-grow: 1;">
-                            <span style="font-weight: bold; font-size: 14px; color: #888;">💙 PayPal</span>
-                            <span style="display: block; font-size: 11px; color: #777;">Próximamente</span>
-                        </div>
-                    </label>
-                </div>
-            </div>
-
-            <button class="btn-comprar" onclick="comprar()">📲 PEDIR POR WHATSAPP</button>
+            <span>🎁</span>
+            <h3>Recompensas</h3>
+            <p>Obtén recompensas exclusivas.</p>
         </div>
 
-        <!-- Beneficios -->
-        <div class="section">
-            <h2>Beneficios</h2>
-            <div id="benefits"></div>
+        <div class="card">
+            <span>💎</span>
+            <h3>Contenido exclusivo</h3>
+            <p>Disfruta contenido especial.</p>
         </div>
 
-        <!-- Top Compradores -->
-        <div class="section">
-            <h2>Top Compradores</h2>
-            <div id="topBuyers"></div>
+        <div class="card">
+            <span>⚡</span>
+            <h3>Entrega rápida</h3>
+            <p>Procesamos tu pedido rápidamente.</p>
         </div>
 
-        <!-- FAQ -->
-        <div class="section">
-            <h2>Preguntas Frecuentes</h2>
-            <div id="faq"></div>
-        </div>
-
-        <footer>
-            <p><a href="admin.html">Panel de administración</a></p>
-        </footer>
     </div>
 
-    <script type="module" src="app.js"></script>
+</section>
+
+<section id="comprar" class="section purchase">
+
+    <h2>🛒 Comprar Pase Élite</h2>
+
+    <div class="form-box">
+
+        <label>ID de Free Fire</label>
+        <input
+            type="text"
+            id="playerId"
+            placeholder="Ej: 123456789"
+        >
+
+        <label>Nombre del jugador</label>
+        <input
+            type="text"
+            id="playerName"
+            placeholder="Tu nombre en Free Fire"
+        >
+
+        <label>Cantidad</label>
+
+        <div class="quantity">
+
+            <button type="button" onclick="changeQuantity(-1)">
+                −
+            </button>
+
+            <input
+                type="number"
+                id="cantidad"
+                value="1"
+                min="1"
+                readonly
+            >
+
+            <button type="button" onclick="changeQuantity(1)">
+                +
+            </button>
+
+        </div>
+
+        <div class="total-box">
+            <span>Total:</span>
+            <strong id="total">$7.000 COP</strong>
+        </div>
+
+        <button
+            type="button"
+            class="buy-btn"
+            onclick="comprar()"
+        >
+            📲 PEDIR POR WHATSAPP
+        </button>
+
+        <p class="small-text">
+            Al comprar se abrirá WhatsApp para enviar tu pedido.
+        </p>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <h2>🏆 Top compradores</h2>
+
+    <div id="topBuyers" class="buyers">
+
+        <div class="buyer">
+            <strong>#1</strong>
+            <span>Jugador</span>
+            <b>10 Pases</b>
+        </div>
+
+        <div class="buyer">
+            <strong>#2</strong>
+            <span>Jugador</span>
+            <b>5 Pases</b>
+        </div>
+
+        <div class="buyer">
+            <strong>#3</strong>
+            <span>Jugador</span>
+            <b>3 Pases</b>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <h2>📋 ¿Cómo comprar?</h2>
+
+    <div class="steps">
+
+        <div class="step">
+            <span>1</span>
+            <p>Escribe tu ID de Free Fire.</p>
+        </div>
+
+        <div class="step">
+            <span>2</span>
+            <p>Escribe tu nombre y selecciona la cantidad.</p>
+        </div>
+
+        <div class="step">
+            <span>3</span>
+            <p>Toca comprar por WhatsApp.</p>
+        </div>
+
+        <div class="step">
+            <span>4</span>
+            <p>Envía el pedido y espera la confirmación.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <h2>❓ Preguntas frecuentes</h2>
+
+    <div id="faq" class="faq">
+
+        <details>
+            <summary>¿Cómo recibo mi Pase Élite?</summary>
+            <p>
+                Después de confirmar tu pedido recibirás las instrucciones
+                correspondientes por WhatsApp.
+            </p>
+        </details>
+
+        <details>
+            <summary>¿Qué necesito para comprar?</summary>
+            <p>
+                Necesitas tu ID y nombre de jugador de Free Fire.
+            </p>
+        </details>
+
+        <details>
+            <summary>¿Dónde hago el pedido?</summary>
+            <p>
+                El pedido se realiza directamente por WhatsApp.
+            </p>
+        </details>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <div class="footer-logo">
+        🔥 PASE ÉLITE SHOP
+    </div>
+
+    <p>
+        Tienda online de Pase Élite para Free Fire.
+    </p>
+
+    <p class="copyright">
+        © 2026 PaseEliteShop
+    </p>
+
+    <a href="admin.html" class="admin-link">
+        Panel de administración
+    </a>
+
+</footer>
+
+<!-- Ventana emergente (Modal) para seleccionar el método de pago al hacer clic en pedir -->
+<div id="paymentModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+    <div style="background: #1a1a1a; border: 2px solid #ff9800; padding: 25px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center;">
+        <h3 style="color: #ff9800; margin-bottom: 15px; font-size: 18px;">💳 Selecciona tu método de pago</h3>
+        
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+            <!-- Opción Nequi (Activa) -->
+            <label style="display: flex; align-items: center; background: rgba(255, 152, 0, 0.15); border: 2px solid #ff9800; padding: 12px; border-radius: 8px; cursor: pointer; color: #fff; text-align: left;">
+                <input type="radio" name="modalPaymentMethod" value="Nequi" checked style="accent-color: #ff9800; margin-right: 10px; transform: scale(1.2);">
+                <div>
+                    <span style="font-weight: bold; font-size: 15px; display: block;">💜 Nequi</span>
+                    <span style="font-size: 12px; color: #bbb;">Transfiere al: 315 787 4619</span>
+                </div>
+            </label>
+
+            <!-- Opción PayPal (Próximamente) -->
+            <label style="display: flex; align-items: center; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px; border-radius: 8px; opacity: 0.5; cursor: not-allowed; text-align: left;">
+                <input type="radio" name="modalPaymentMethod" value="PayPal" disabled style="margin-right: 10px; transform: scale(1.2);">
+                <div>
+                    <span style="font-weight: bold; font-size: 15px; color: #888; display: block;">💙 PayPal</span>
+                    <span style="font-size: 12px; color: #777;">Próximamente</span>
+                </div>
+            </label>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <button type="button" onclick="cerrarModalPago()" style="flex: 1; padding: 10px; background: #333; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Cancelar</button>
+            <button type="button" onclick="confirmarYEnviarWhatsApp()" style="flex: 1; padding: 10px; background: #ff9800; color: #000; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Continuar</button>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="app.js"></script>
+
 </body>
 </html>
